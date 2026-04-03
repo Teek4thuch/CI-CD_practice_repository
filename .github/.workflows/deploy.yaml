@@ -9,6 +9,15 @@ jobs:
   check :
     runs-on: ubuntu-latest
     steps:
+      - name : checkout
+        uses : actions/checkout@v6
+      - name : check folder
+        run : |
+          ls -la
+        name : Setup NPM
+        uses : actions/setup-node@v3
+        with : 
+          node-version : '24'
       - name : testing
         run : |
           echo "testing CI/CD pipeline"

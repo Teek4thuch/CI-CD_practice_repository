@@ -1,0 +1,16 @@
+name : Deloy on push
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  check :
+    runs-on: ubuntu-latest
+    steps:
+      - name : testing
+        run : |
+          echo "testing CI/CD pipeline"
+          echo "Lobster is the best!"
+

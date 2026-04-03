@@ -18,10 +18,14 @@ jobs:
   build :
     runs-on: ubuntu-latest
     steps:
+    - name : checkout
+      uses : actions/checkout@v6
     - name : Setup NPM
       uses : actions/setup-node@v3
       with : 
         node-version : '24'
+    - name : Install dependencies
+      run : npm ci
     - name : testing
       run : |
         echo "testing CI/CD pipeline"
@@ -33,7 +37,7 @@ jobs:
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
-        path: ./out
+        path: ./.next
 
   deploy:
     needs: build

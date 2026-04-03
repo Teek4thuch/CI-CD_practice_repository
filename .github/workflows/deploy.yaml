@@ -14,12 +14,33 @@ jobs:
       - name : check folder
         run : |
           ls -la
-      - name : Setup NPM
-        uses : actions/setup-node@v3
-        with : 
-          node-version : '24'
-      - name : testing
-        run : |
-          echo "testing CI/CD pipeline"
-          echo "Lobster is the best!"
 
+  build :
+    runs-on: ubuntu-latest
+    steps:
+    - name : Setup NPM
+      uses : actions/setup-node@v3
+      with : 
+        node-version : '24'
+    - name : testing
+      run : |
+        echo "testing CI/CD pipeline"
+        echo "Lobster is the best!"
+    - name : build
+      run : |
+        echo "building the project"
+        npm run build
+    - name: Upload artifact
+      uses: actions/upload-pages-artifact@v3
+      with:
+        path: ./out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
